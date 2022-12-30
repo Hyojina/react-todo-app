@@ -3,6 +3,11 @@ import "./App.css";
 import React, { Component } from "react";
 
 export class App extends Component {
+  todoData = [
+    { id: "1", title: "공부하기", completed: true },
+    { id: "2", title: "청소하기", completed: false },
+  ];
+
   btnStyle = {
     color: "#fff",
     border: "none",
@@ -27,16 +32,13 @@ export class App extends Component {
           <div className="title">
             <h1>할 일 목록</h1>
           </div>
-          <div style={this.listStyle()}>
-            <input type="checkbox" defaultChecked={false} />
-            공부하기
-            <button style={this.btnStyle}>X</button>
-          </div>
-          <div style={this.listStyle()}>
-            <input type="checkbox" defaultChecked={false} />
-            청소하기
-            <button style={this.btnStyle}>X</button>
-          </div>
+          {this.todoData.map((data) => (
+            <div style={this.listStyle()} key={data.id}>
+              <input type="checkbox" defaultChecked={data.completed} />{" "}
+              {data.title}
+              <button style={this.btnStyle}>X</button>
+            </div>
+          ))}
         </div>
       </div>
     );

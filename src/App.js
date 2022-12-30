@@ -22,11 +22,11 @@ export class App extends Component {
   };
 
   // 동적으로 바꾸기 위해 listStyle은 함수로 생성
-  listStyle = () => {
+  listStyle = (completed) => {
     return {
       padding: "10px",
       borderBottom: "1px #ccc dotted",
-      textDecoration: "none",
+      textDecoration: completed ? "line-through" : "none",
     };
   };
 
@@ -55,6 +55,16 @@ export class App extends Component {
     });
   };
 
+  handleCompleteChange = (id) => {
+    let newTodoData = this.state.todoData.map((data) => {
+      if (data.id === id) {
+        data.completed = !data.completed;
+      }
+      return data;
+    });
+    this.setState({ todoData: newTodoData });
+  };
+
   render() {
     return (
       <div className="container">
@@ -63,8 +73,12 @@ export class App extends Component {
             <h1>할 일 목록</h1>
           </div>
           {this.state.todoData.map((data) => (
-            <div style={this.listStyle()} key={data.id}>
-              <input type="checkbox" defaultChecked={data.completed} />{" "}
+            <div style={this.listStyle(data.completed)} key={data.id}>
+              <input
+                type="checkbox"
+                onChange={() => this.handleCompleteChange(data.id)}
+                defaultChecked={data.completed}
+              />{" "}
               {data.title}
               <button
                 style={this.btnStyle}

@@ -11,7 +11,7 @@ export class App extends Component {
     ],
     value: "",
   };
-
+  // form: 엔터버튼으로 submit이 가능하고, 코드를 볼 때 직관적임
   btnStyle = {
     color: "#fff",
     border: "none",
@@ -36,6 +36,25 @@ export class App extends Component {
     this.setState({ todoData: newTodoData });
   };
 
+  handleChange = (e) => {
+    this.setState({ value: e.target.value });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+
+    let newTodoData = {
+      id: Date.now(),
+      title: this.state.value,
+      completed: false,
+    };
+
+    this.setState({
+      todoData: [...this.state.todoData, newTodoData],
+      value: "",
+    });
+  };
+
   render() {
     return (
       <div className="container">
@@ -55,6 +74,24 @@ export class App extends Component {
               </button>
             </div>
           ))}
+          <form
+            style={{ display: "flex" }}
+            onSubmit={(e) => this.handleSubmit(e)}
+          >
+            <input
+              type="text"
+              style={{ flex: "10", padding: "5px" }}
+              placeholder="해야할 일을 입력하세요."
+              value={this.state.value}
+              onChange={(e) => this.handleChange(e)}
+            />
+            <input
+              type="submit"
+              value="입력"
+              className="btn"
+              style={{ flex: "1" }}
+            />
+          </form>
         </div>
       </div>
     );

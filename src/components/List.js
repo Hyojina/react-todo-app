@@ -5,9 +5,10 @@ const List = React.memo(
     const [isEditing, setIsEditing] = useState(false);
     const [editedTitle, setEditedTitle] = useState(title);
 
-    const handleClick = (id) => {
+    const handleXClick = (id) => {
       let newTodoData = todoData.filter((data) => data.id !== id);
       setTodoData(newTodoData);
+      localStorage.setItem("todoData", JSON.stringify(newTodoData));
     };
 
     const handleCompleteChange = (id) => {
@@ -18,6 +19,7 @@ const List = React.memo(
         return data;
       });
       setTodoData(newTodoData);
+      localStorage.setItem("todoData", JSON.stringify(newTodoData));
     };
 
     const handleEditChange = (e) => {
@@ -32,6 +34,7 @@ const List = React.memo(
         return data;
       });
       setTodoData(newTodoData);
+      localStorage.setItem("todoData", JSON.stringify(newTodoData));
       setIsEditing(false);
     };
 
@@ -86,7 +89,7 @@ const List = React.memo(
           <div className="items-center">
             <button
               className="float-right px-4 py-2"
-              onClick={() => handleClick(id)}
+              onClick={() => handleXClick(id)}
             >
               X
             </button>
